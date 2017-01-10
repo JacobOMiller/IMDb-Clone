@@ -1,9 +1,9 @@
 import {Boxer} from './../Boxers';
 
 const seeds = [
-  {name: 'Bill Brasky', age: 37, weight: 201},
-  {name: 'Chip McDaniels', age: 29,  weight: 179},
-  {name: 'Kevin Evans', age: 28, weight: 181}
+  {name: 'Bill Brasky', age: 37, weight: 201, email:'1234a@email.net'},
+  {name: 'Chip McDaniels', age: 29,  weight: 179, email:'1234a@email.net'},
+  {name: 'Kevin Evans', age: 28, weight: 181, email:'1234a@email.net'}
 ]
 
 seeds.map((seed) => {

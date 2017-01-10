@@ -5,7 +5,7 @@ var IMDbClone;
         $stateProvider
             .state('home', {
             url: '/',
-            template: '<boxer-list></boxer-list>'
+            template: '<movie-list></movie-list>'
         });
         $urlRouterProvider.otherwise('/');
         $locationProvider.html5Mode(true);

@@ -1,22 +1,22 @@
 namespace IMDbClone.Services {
-  export class BoxerService{
-    public BoxerResource;
+  export class MovieService{
+    public MovieResource;
 
-    getBoxers() {
-      return this.BoxerResource.query().$promise;
+    getMovies() {
+      return this.MovieResource.query().$promise;
     }
 
     //TODO should be typed
-    update(boxer) {
-      return this.BoxerResource.update({id: boxer._id}, boxer).$promise;
+    update(movie) {
+      return this.MovieResource.update({id: movie._id}, movie).$promise;
     }
 
     constructor(
       $resource: ng.resource.IResourceService
     ) {
-      this.BoxerResource = $resource('/api/boxers/:id', {id: '@id'}, { update: { method: 'put' }});
+      this.MovieResource = $resource('/api/movies/:id', {id: '@id'}, { update: { method: 'put' }});
     }
   }
 
-  angular.module('imdb-clone').service('BoxerService', BoxerService);
+  angular.module('imdb-clone').service('MovieService', MovieService);
 }
