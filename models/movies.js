@@ -1,7 +1,6 @@
 "use strict";
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-Export;
 var MovieSchema = new Schema({
     title: String,
     director: String,

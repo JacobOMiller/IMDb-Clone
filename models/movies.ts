@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 
 let Schema = mongoose.Schema;
 
-Export interface IMovie extends mongoose.Document{
+export interface IMovie extends mongoose.Document{
   title: string,
   director: string,
   picture: string,
