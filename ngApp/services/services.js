@@ -2,19 +2,19 @@ var IMDbClone;
 (function (IMDbClone) {
     var Services;
     (function (Services) {
-        var BoxerService = (function () {
-            function BoxerService($resource) {
-                this.BoxerResource = $resource('/api/boxers/:id', { id: '@id' }, { update: { method: 'put' } });
+        var MovieService = (function () {
+            function MovieService($resource) {
+                this.MovieResource = $resource('/api/movies/:id', { id: '@id' }, { update: { method: 'put' } });
             }
-            BoxerService.prototype.getBoxers = function () {
-                return this.BoxerResource.query().$promise;
+            MovieService.prototype.getMovies = function () {
+                return this.MovieResource.query().$promise;
             };
-            BoxerService.prototype.update = function (boxer) {
-                return this.BoxerResource.update({ id: boxer._id }, boxer).$promise;
+            MovieService.prototype.update = function (movie) {
+                return this.MovieResource.update({ id: movie._id }, movie).$promise;
             };
-            return BoxerService;
+            return MovieService;
         }());
-        Services.BoxerService = BoxerService;
-        angular.module('imdb-clone').service('BoxerService', BoxerService);
+        Services.MovieService = MovieService;
+        angular.module('imdb-clone').service('MovieService', MovieService);
     })(Services = IMDbClone.Services || (IMDbClone.Services = {}));
 })(IMDbClone || (IMDbClone = {}));

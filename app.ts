@@ -58,7 +58,7 @@ app.use('/ngApp', express.static(path.join(__dirname, 'ngApp')));
 app.use('/', routes);
 
 //apis
-app.use('/api', require('./api/boxers'));
+app.use('/api', require('./api/movies'));
 
 // redirect 404 to home for the sake of AngularJS client-side routes
 app.get('/*', function(req, res, next) {
