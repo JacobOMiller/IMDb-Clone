@@ -11,21 +11,28 @@
     <base href="/">
  		<!-- Use maximum-scale and user-scalable at your own risk. It disables pinch/zoom. Think about usability/accessibility before including.-->
  		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link type="text/css" rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+    <!-- <link rel="stylesheet" href="/ngApp/styles/app.css"> -->
  	</head>
  	<body>
-
+<div class="container">
     <ui-view></ui-view>
+</div>
 
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-resource/angular-resource.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-
+      <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <!-- <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/bower_components/bootstrap-sass/javascripts/bootstrap.js"></script> -->
     <script src="/ngApp/app.js"></script>
     <script src="/ngApp/services/services.js"></script>
 
     <!-- grunt or gulp injection start -->
-      <script src="/ngApp/components/movieList/boxerList.js"></script>
-      <script src="/ngApp/components/movieCard/boxerCard.js"></script>
+      <script src="/ngApp/components/movieList/movieList.js"></script>
+      <script src="/ngApp/components/movieCard/movieCard.js"></script>
+      <script src="/ngApp/components/movieDetails/movieDetail.js"></script>
+      <script src="/ngApp/components/createmovie/createMovie.js"></script>
     <!-- grunt or gulp injection end -->
 
  	</body>

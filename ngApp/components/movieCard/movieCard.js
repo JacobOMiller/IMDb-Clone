@@ -5,8 +5,9 @@ var IMDbClone;
         var name = 'movieCard';
         var template = '/ngApp/components/movieCard/movieCard.html';
         var MovieCard = (function () {
-            function MovieCard(MovieService) {
+            function MovieCard(MovieService, $state) {
                 this.MovieService = MovieService;
+                this.$state = $state;
             }
             MovieCard.prototype.submit = function () {
                 this.MovieService.update(this.movie)
@@ -14,6 +15,9 @@ var IMDbClone;
                 }).catch(function (e) {
                     throw new Error(e);
                 });
+            };
+            MovieCard.prototype.goToDetails = function (id) {
+                this.$state.go('movies', { id: id });
             };
             return MovieCard;
         }());

@@ -7,7 +7,7 @@ namespace IMDbClone.Components {
   export class MovieCard {
     public movie;
     constructor(
-      private MovieService: IMDbClone.Services.MovieService
+      private MovieService: IMDbClone.Services.MovieService , private $state:ng.ui.IStateService
     ) {
     }
 
@@ -18,6 +18,9 @@ namespace IMDbClone.Components {
         }).catch((e) => {
           throw new Error(e);
         })
+    }
+    goToDetails(id){
+      this.$state.go('movies',{id: id});
     }
   }
 

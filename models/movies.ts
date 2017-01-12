@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose';
-
+import Rating from './ratings';
 let Schema = mongoose.Schema;
 
-Export interface IMovie extends mongoose.Document{
+export interface IMovie extends mongoose.Document{
   title: string,
   director: string,
   picture: string,
@@ -13,7 +13,7 @@ let MovieSchema = new Schema({
   title: String,
   director: String,
   picture: String,
-  rating: Number
+  rating:{type: Number, require: false, min:0, max:10, default:0}
 });
 
 export const Movie = mongoose.model<IMovie>('Movie', MovieSchema);

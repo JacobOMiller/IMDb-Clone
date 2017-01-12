@@ -1,0 +1,6 @@
+body{
+  padding: 40px;
+}
+div.panel.panel-warning{
+  radius: 0;
+}

@@ -1,1 +1,1 @@
-require('./Boxers');
+require('./movies');
