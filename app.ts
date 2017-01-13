@@ -31,8 +31,8 @@ mongoose.connection.on('connected', () => {
 
   //if dev seed the deb
   if(dev) {
-    mongoose.connection.db.dropDatabase();
-    require('./models/seeds/index');
+    // mongoose.connection.db.dropDatabase();
+    // require('./models/seeds/index');
   }
 });
 

@@ -40,9 +40,11 @@ router.delete('/movies/:id', function (req, res, next) {
     });
 });
 router.get('/movies/:id', function (req, res, next) {
+    console.log(req.params.id);
     movies_1.Movie.findOne({ _id: req.params.id }, {}, function (e, data) {
         if (e)
             return next({ message: 'Could not find movies', Error: e });
+        console.log(data);
         res.json(data);
     });
 });

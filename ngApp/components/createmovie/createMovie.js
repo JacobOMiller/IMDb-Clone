@@ -10,8 +10,10 @@ var IMDbClone;
                 this.$state = $state;
             }
             CreateMovie.prototype.submit = function () {
+                var _this = this;
                 this.MovieService.postMovie(this.movie).then(function (result) {
                     console.log(result);
+                    _this.$state.go('home');
                 }).catch(function (e) {
                     throw new Error(e);
                 });

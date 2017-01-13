@@ -7,13 +7,15 @@ namespace IMDbClone.Components {
     export class CreateMovie {
         public movie;
         constructor(
-            private MovieService: IMDbClone.Services.MovieService, private $state: ng.ui.IStateService
+            private MovieService: IMDbClone.Services.MovieService,
+            private $state: ng.ui.IStateService
         ) {
         }
 
         submit() {
             this.MovieService.postMovie(this.movie).then((result) => {
                 console.log(result);
+                this.$state.go('home');
             }).catch((e) => {
                 throw new Error(e);
             })

@@ -1,4 +1,4 @@
-<create-movie></create-movie>
+
 <form>
-  <movie-card ng-repeat="movie in vm.movies" movie="movie"></movie-card>
+  <movie-card ng-repeat="movie in vm.movies | orderBy: '-rating' | limitTo: 2" movie="movie"></movie-card>
 </form>

@@ -22,6 +22,9 @@ namespace IMDbClone.Components {
     goToDetails(id){
       this.$state.go('movies',{id: id});
     }
+    goToUpdate(id){
+      this.$state.go('update',{id: id});
+    }
   }
 
   angular.module('imdb-clone').component(name, {

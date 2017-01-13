@@ -16,14 +16,11 @@ var IMDbClone;
             MovieService.prototype.postMovie = function (movie) {
                 return this.MovieResource.save(movie).$promise;
             };
-            MovieService.prototype.updateMovie = function () {
-                return this.MovieResource.put({ id: movie._id }).$promise;
-            };
-            MovieService.prototype.deleteMovie = function () {
-                return this.MovieResource.delete({ id: movie._id }).$promise;
-            };
             MovieService.prototype.update = function (movie) {
                 return this.MovieResource.update({ id: movie._id }, movie).$promise;
+            };
+            MovieService.prototype.delete = function (movie) {
+                return this.MovieResource.remove({ id: movie._id }).$promise;
             };
             return MovieService;
         }());

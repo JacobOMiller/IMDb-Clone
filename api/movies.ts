@@ -38,8 +38,10 @@ router.delete('/movies/:id', (req, res, next) => {
     })
 })
 router.get('/movies/:id', (req, res, next) => {
+  console.log(req.params.id);
   Movie.findOne({_id: req.params.id}, {}, (e, data) => {
     if (e) return next({ message: 'Could not find movies', Error:e});
+    console.log(data);
     res.json(data);
   })
 })

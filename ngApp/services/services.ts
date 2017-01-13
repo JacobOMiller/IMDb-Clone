@@ -13,17 +13,14 @@ namespace IMDbClone.Services {
     postMovie(movie){
       return this.MovieResource.save(movie).$promise;
     }
-    updateMovie(){
-      return this.MovieResource.put({id: movie._id}).$promise;
-    }
-    deleteMovie(){
-      return this.MovieResource.delete({id: movie._id}).$promise;
-    }
+
     //TODO should be typed
     update(movie) {
       return this.MovieResource.update({id: movie._id}, movie).$promise;
     }
-
+    delete(movie){
+      return this.MovieResource.remove({id: movie._id}).$promise;
+    }
     constructor(
       $resource: ng.resource.IResourceService
     ) {
@@ -31,5 +28,8 @@ namespace IMDbClone.Services {
     }
   }
 
+
   angular.module('imdb-clone').service('MovieService', MovieService);
+
+  
 }

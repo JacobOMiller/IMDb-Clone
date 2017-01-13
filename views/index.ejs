@@ -11,20 +11,32 @@
     <base href="/">
  		<!-- Use maximum-scale and user-scalable at your own risk. It disables pinch/zoom. Think about usability/accessibility before including.-->
  		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link type="text/css" rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
-    <!-- <link rel="stylesheet" href="/ngApp/styles/app.css"> -->
+    <!-- <link type="text/css" rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css"> -->
+    <link rel="stylesheet" href="/ngApp/styles/app.css">
  	</head>
  	<body>
-<div class="container">
-    <ui-view></ui-view>
-</div>
 
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" ui-sref="home">home</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a ui-sref="home">home</a></li>
+            <li><a ui-sref="create">create</a></li>
+        </ul>
+    </div>
+</nav>
+<div style="padding: 0 25px 0 25px">
+    <ui-view ng-cloak></ui-view>
+
+</div>
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-resource/angular-resource.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <!-- <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="/bower_components/bootstrap-sass/javascripts/bootstrap.js"></script> -->
+    <!-- <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script> -->
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
     <script src="/ngApp/app.js"></script>
     <script src="/ngApp/services/services.js"></script>
 
@@ -33,6 +45,8 @@
       <script src="/ngApp/components/movieCard/movieCard.js"></script>
       <script src="/ngApp/components/movieDetails/movieDetail.js"></script>
       <script src="/ngApp/components/createmovie/createMovie.js"></script>
+      <script src="/ngApp/components/movieUpdate/movieUpdate.js"></script>
+
     <!-- grunt or gulp injection end -->
 
  	</body>
