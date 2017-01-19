@@ -3,6 +3,12 @@ import * as bodyParser from 'body-parser';
 import * as ejs from 'ejs';
 import * as path from 'path';
 import * as mongoose from 'mongoose';
+import * as passport from 'passport';
+import * as logger from 'morgan';
+import * as session from 'express-session';
+const MongoStore = require('connect-mongo')(session);
+import {User} from './models/users';
+import UserApi from './api/users';
 
 //express routes
 import routes from './routes/index';
@@ -19,6 +25,35 @@ if(dev){
   let dotenv = require('dotenv');
   dotenv.load();
 }
+//config for passport login
+require("./config/passport");
+
+// config req.session your session
+app.set('trust proxy', 1);
+let sess = {
+  maxAge: 172800000,
+  secure: false,
+  httpOnly: true
+}
+
+//set to secure in production
+if (app.get('env')=== 'production'){
+  sess.secure = true;
+}
+
+//use session config
+app.use(session({
+  cookie: sess,
+  secret: process.env.SESSION_SECRET,
+  store: new MongoStore({
+    url: process.env.MONGO_URI
+  }),
+  unset: 'destroy',
+  resave: false,
+  saveUninitialized: false
+}));
+
+
 
 //db connections
 // mongodb://user:password@sub.mlab.com:39482/myapp
@@ -28,12 +63,18 @@ mongoose.connect(process.env.MONGO_URI);
 //optional
 mongoose.connection.on('connected', () => {
   console.log('mongoose connected');
-
-  //if dev seed the deb
-  if(dev) {
-    // mongoose.connection.db.dropDatabase();
-    // require('./models/seeds/index');
-  }
+  User.findOne({username:'admin'},(err, user)=>{
+    if (err) return;
+    if(user) return;
+    if(!user){
+      var admin = new User();
+      admin.email = process.env.ADMIN_EMAIL;
+      admin.username = process.env.ADMIN_USERNAME;
+      admin.setPassword(process.env.ADMIN_PASSWORD);
+      admin.roles = ['user', 'admin'];
+      admin.save();
+     }
+  });
 });
 
 //optional
@@ -46,6 +87,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 //config bodyParser
+app.use(logger('dev'));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -59,6 +103,9 @@ app.use('/', routes);
 
 //apis
 app.use('/api', require('./api/movies'));
+app.use('/api', UserApi);
+
+
 
 // redirect 404 to home for the sake of AngularJS client-side routes
 app.get('/*', function(req, res, next) {

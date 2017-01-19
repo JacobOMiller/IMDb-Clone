@@ -2,8 +2,6 @@ var IMDbClone;
 (function (IMDbClone) {
     var Components;
     (function (Components) {
-        //component config
-        //boxerList translates to <boxer-list></boxer-list>
         var name = 'boxerList';
         var template = '/ngApp/components/boxerList/boxerList.html';
         var BoxerList = (function () {

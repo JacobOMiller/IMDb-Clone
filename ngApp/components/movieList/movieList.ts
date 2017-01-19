@@ -6,9 +6,12 @@ namespace IMDbClone.Components {
 
   export class MovieList {
     public movies;
+    public currentUser;
     constructor(
       private MovieService: IMDbClone.Services.MovieService,
+      private Session: IMDbClone.Services.Session
     ){
+      this.currentUser = Session.getUser();
       this.MovieService.getMovies()
       .then((data) => {
         this.movies = data;

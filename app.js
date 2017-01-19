@@ -3,48 +3,73 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 var mongoose = require("mongoose");
-//express routes
+var passport = require("passport");
+var logger = require("morgan");
+var session = require("express-session");
+var MongoStore = require('connect-mongo')(session);
+var users_1 = require("./models/users");
+var users_2 = require("./api/users");
 var index_1 = require("./routes/index");
-//init express and assign it to app var
-//INITIATE THE APP
 var app = express();
-//optional for security
 var dev = app.get('env') === 'development' ? true : false;
-//optional
 if (dev) {
     var dotenv = require('dotenv');
     dotenv.load();
 }
-//db connections
-// mongodb://user:password@sub.mlab.com:39482/myapp
-// instead of process if you don't use dotenv package
+require("./config/passport");
+app.set('trust proxy', 1);
+var sess = {
+    maxAge: 172800000,
+    secure: false,
+    httpOnly: true
+};
+if (app.get('env') === 'production') {
+    sess.secure = true;
+}
+app.use(session({
+    cookie: sess,
+    secret: process.env.SESSION_SECRET,
+    store: new MongoStore({
+        url: process.env.MONGO_URI
+    }),
+    unset: 'destroy',
+    resave: false,
+    saveUninitialized: false
+}));
 mongoose.connect(process.env.MONGO_URI);
-//optional
 mongoose.connection.on('connected', function () {
     console.log('mongoose connected');
-    //if dev seed the deb
-    if (dev) {
-    }
+    users_1.User.findOne({ username: 'admin' }, function (err, user) {
+        if (err)
+            return;
+        if (user)
+            return;
+        if (!user) {
+            var admin = new users_1.User();
+            admin.email = process.env.ADMIN_EMAIL;
+            admin.username = process.env.ADMIN_USERNAME;
+            admin.setPassword(process.env.ADMIN_PASSWORD);
+            admin.roles = ['user', 'admin'];
+            admin.save();
+        }
+    });
 });
-//optional
 mongoose.connection.on('error', function (e) {
     throw new Error(e);
 });
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-//config bodyParser
+app.use(logger('dev'));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-//static routing
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 app.use('/ngApp', express.static(path.join(__dirname, 'ngApp')));
-//a server route
 app.use('/', index_1.default);
-//apis
 app.use('/api', require('./api/movies'));
-// redirect 404 to home for the sake of AngularJS client-side routes
+app.use('/api', users_2.default);
 app.get('/*', function (req, res, next) {
     if (/.js|.html|.css|templates|js|scripts/.test(req.path) || req.xhr) {
         return next({ status: 404, message: 'Not Found' });
@@ -53,14 +78,11 @@ app.get('/*', function (req, res, next) {
         return res.render('index');
     }
 });
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err['status'] = 404;
     next(err);
 });
-// development error handler
-// will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
         res.status(err['status'] || 500);
@@ -70,9 +92,6 @@ if (app.get('env') === 'development') {
         });
     });
 }
-// production error handler
-// no stacktraces leaked to user
-// TODO Error interface
 app.use(function (err, req, res, next) {
     res.status(err['status'] || 500);
     res.render('error', {

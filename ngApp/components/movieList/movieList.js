@@ -2,14 +2,14 @@ var IMDbClone;
 (function (IMDbClone) {
     var Components;
     (function (Components) {
-        //componet config
-        //movieList translates to <movie-list></movie-list>
         var name = 'movieList';
         var template = '/ngApp/components/movieList/movieList.html';
         var MovieList = (function () {
-            function MovieList(MovieService) {
+            function MovieList(MovieService, Session) {
                 var _this = this;
                 this.MovieService = MovieService;
+                this.Session = Session;
+                this.currentUser = Session.getUser();
                 this.MovieService.getMovies()
                     .then(function (data) {
                     _this.movies = data;

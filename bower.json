@@ -19,6 +19,8 @@
     "angular-ui-router": "^0.3.2",
     "angular-resource": "^1.6.1",
     "bootstrap-sass": "^3.3.7",
-    "less": "^2.7.2"
+    "less": "^2.7.2",
+    "ngstorage": "^0.3.11",
+    "lodash": "^4.17.4"
   }
 }
